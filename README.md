@@ -38,13 +38,6 @@
 <img width="724" height="593" alt="image" src="https://github.com/user-attachments/assets/f0c5e612-89d6-42ea-92e9-5bbfab168321" />
 
 
-[Frankfurter API]   [CoinGecko API]
-       │                   │
-       ▼ (по расписанию)   ▼
-[Apache Airflow (Docker)] ──► [Telegram Bot] (Алерты об успехе/ошибке)
-       │
-       ▼
-
 ### Процесс загрузки данных
 
 **1. Извлечение (Extract)**  
