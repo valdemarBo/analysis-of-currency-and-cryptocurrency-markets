@@ -43,6 +43,34 @@
 [Apache Airflow (Docker)] ──► [Telegram Bot] (Алерты об успехе/ошибке)
        │
        ▼
+
+### Процесс загрузки данных
+
+**1. Извлечение (Extract)**  
+DAG-и в Airflow (`fx_etl_daily` и `crypto_etl_daily`) запускаются по будням. Python-скрипты обращаются к публичным API с использованием библиотеки `requests`.
+
+**2. Загрузка (Load)**  
+Данные записываются в базу PostgreSQL. Для защиты от дубликатов при повторных запусках используется конструкция `INSERT ... ON CONFLICT DO UPDATE`.
+
+**3. Трансформация (Transform)**  
+В базе данных настроены Materialized Views (`dm_fx_daily`, `dm_crypto_daily`). После каждой загрузки Airflow отправляет команду `REFRESH MATERIALIZED VIEW`, которая пересчитывает оконные функции (LAG) и обновляет витрины.
+
+---
+
+### Исследовательский анализ данных (EDA) и инженерия
+
+#### Проверка качества данных и идемпотентность
+При проектировании первичных ключей (Primary Keys) в таблицах `fx_rates` и `crypto_rates` была обеспечена защита от дублирования.
+
+```sql
+-- Пример создания таблицы с защитой от дубликатов
+CREATE TABLE IF NOT EXISTS crypto_rates (
+    rate_date   DATE NOT NULL,
+    coin_id     VARCHAR(20) NOT NULL,
+    price_usd   NUMERIC(18, 2) NOT NULL,
+    loaded_at   TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (rate_date, coin_id)
+);
 [PostgreSQL] 
   ├── Raw Layer (fx_rates, crypto_rates)
   └── Data Marts (dm_fx_daily, dm_crypto_daily) ──► [Power BI Dashboard]
