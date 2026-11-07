@@ -36,7 +36,6 @@
 
 ### Архитектура проекта
 
-```text
 [Frankfurter API]   [CoinGecko API]
        │                   │
        ▼ (по расписанию)   ▼
