@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS crypto_rates (
     loaded_at   TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (rate_date, coin_id)
 );
+```
 [PostgreSQL] 
   ├── Raw Layer (fx_rates, crypto_rates)
   └── Data Marts (dm_fx_daily, dm_crypto_daily) ──► [Power BI Dashboard]
