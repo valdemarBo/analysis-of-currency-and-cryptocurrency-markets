@@ -35,6 +35,8 @@
 ## Введение: Архитектура пайплайна и процесс загрузки
 
 ### Архитектура проекта
+<img width="724" height="593" alt="image" src="https://github.com/user-attachments/assets/f0c5e612-89d6-42ea-92e9-5bbfab168321" />
+
 
 [Frankfurter API]   [CoinGecko API]
        │                   │
